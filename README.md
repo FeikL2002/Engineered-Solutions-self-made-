@@ -1,1 +1,5 @@
-🛠 Project PortfolioProjectTech StackStatusDescriptionVisionCore AI CameraPython, YOLOv8, Flask, SQLite✅ StableReal-time webcam monitoring with object/face detection and voice alerts.Private VPN & AdBlockerBash, WireGuard, Docker, AdGuard🚀 ActiveAutomated deployment of a secure VPN tunnel with network-wide ad blocking.Lab EnvironmentLinux, SSH, UTM🛠️ In ProgressConfiguration files for my local and cloud-based testing environments.
+.
+├── 📸 VisionCore-AI/      # Real-time computer vision & webcam monitoring
+├── 🛡️ VPN-Gateway/        # WireGuard + AdGuard Home automation scripts
+├── ⚙️ Lab-Configs/        # Server setup and UTM virtualization notes
+└── README.md              # Global project index (You are here)
