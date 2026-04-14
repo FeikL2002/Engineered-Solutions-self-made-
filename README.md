@@ -1,1 +1,1 @@
-# Engineered-Solutions-self-made-
+🛠 Project PortfolioProjectTech StackStatusDescriptionVisionCore AI CameraPython, YOLOv8, Flask, SQLite✅ StableReal-time webcam monitoring with object/face detection and voice alerts.Private VPN & AdBlockerBash, WireGuard, Docker, AdGuard🚀 ActiveAutomated deployment of a secure VPN tunnel with network-wide ad blocking.Lab EnvironmentLinux, SSH, UTM🛠️ In ProgressConfiguration files for my local and cloud-based testing environments.
