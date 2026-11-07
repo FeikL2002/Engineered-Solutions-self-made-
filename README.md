@@ -1,32 +1,68 @@
-# Engineered Solutions (Self-Made)
+# Engineered Solutions | Computer Vision & Network Automation
 
-This repository serves as a centralized hub for custom-engineered software solutions, focusing on **Computer Vision (AI)** and **Secure Network Infrastructure (VPN)**. The project integrates automated visual intelligence with scripted network configurations.
+Personal software experiments by **Lewis Joseph Feik**. This repository currently contains two project areas: a macOS-oriented computer-vision prototype and a WireGuard client-management script.
 
----
+Each project explores a different part of building useful systems: processing camera frames, presenting observations through an interface, storing results, and automating repeatable network-administration tasks.
 
-## 📂 Project Structure
+## Project map
 
-The repository is organized into two primary technical domains:
+| Project | Purpose | Current state |
+|---|---|---|
+| [VisionCore](camera-ai/Visioncore/) | Webcam object detection, face detection, dominant-color analysis, and a separate browser/voice experiment. | Standalone camera scripts are present. The Flask prototype has incomplete frontend packaging. |
+| [WireGuard client setup](vpn%20Lewy-setup/scripts/) | Create a client profile and add its peer to an existing WireGuard server configuration. | `add-client.sh` is committed. The server installer described in the older project notes is absent. |
 
-### 1. 👁️ Visioncore (Camera AI)
-Located in the `camera-ai/Visioncore` directory, this component leverages **Python** for intelligent video processing and computer vision.
-* **Purpose:** Real-time object detection, monitoring, or visual data analysis.
-* **Tech Stack:** Python 3.x, Computer Vision libraries.
+## VisionCore
 
-### 2. 🔒 Lewy-setup (VPN Scripts)
-Located in the `vpn Lewy-setup/scripts` directory, this section contains **Shell** scripts designed for network management.
-* **Purpose:** Automated deployment and configuration of secure VPN environments.
-* **Tech Stack:** Bash/Shell scripting for Linux-based systems.
+### What is included
 
----
+- [`vision_core.py`](camera-ai/Visioncore/vision_core.py): a desktop camera loop using OpenCV, NumPy, and Ultralytics YOLO. It overlays object detections, Haar-cascade face boxes, dominant color, and a calculated frame rate. Press **q** to exit its preview window.
+- [`camera_test.py`](camera-ai/Visioncore/camera_test.py): a small webcam-preview check.
+- [`app.py`](camera-ai/Visioncore/app.py): a Flask experiment with a video stream, JSON detection/statistics routes, SQLite detection logging, text-to-speech, video recording, and requests to a local LM Studio endpoint.
+- A YOLO model-weight file and a historical SQLite database are present in the current tree.
 
-## 🚀 Getting Started
+The source uses OpenCV's **AVFoundation camera backend**, making macOS the intended platform for the main vision scripts. Other platforms need an appropriate camera-backend adjustment.
 
-### Prerequisites
-* **Python 3.x:** Required for the Visioncore AI components.
-* **Linux/Unix Environment:** Necessary for executing the Shell-based VPN setup scripts.
+### Run the standalone vision prototype
 
-### Installation & Setup
+Use a camera you control and grant camera permission to the terminal or Python application when your operating system requests it.
 
-1. **Clone the repository:**
-   ```bash
+```bash
+git clone https://github.com/FeikL2002/Engineered-Solutions-self-made-.git
+cd Engineered-Solutions-self-made-/camera-ai/Visioncore
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install opencv-python numpy ultralytics
+python vision_core.py
+```
+
+These dependencies are identified from the source imports. Versions are not pinned in the repository, and this documentation update did not validate a fresh installation or physical camera behavior.
+
+### Flask prototype status
+
+`app.py` also imports Flask, Requests, and pyttsx3. Its language-model request targets `http://localhost:1234/v1/chat/completions`; the configured local model and server must be supplied by the operator.
+
+The current tree does **not** include the `templates/index.html` file required by its `/` route. The app also binds to all network interfaces on port `5050` and contains no authentication layer. Complete the frontend packaging and review its network exposure before treating it as a usable shared dashboard. The source's repeated-detection counter is an experiment, not a validated anomaly-detection system.
+
+## WireGuard client-management script
+
+[`add-client.sh`](vpn%20Lewy-setup/scripts/add-client.sh) accepts a client name and an optional server endpoint. It validates the name, selects an unused address in its configured subnet, generates WireGuard key material, adds a peer, reloads the interface, and writes a client configuration with restrictive file permissions. QR-code output is attempted for mobile import.
+
+The script expects an **already configured Linux WireGuard server** with:
+
+- `/etc/wireguard/wg0.conf` and `/etc/wireguard/server_public.key`;
+- the WireGuard tools and Linux network/service utilities used by the script;
+- root privileges, plus `qrencode` for QR-code output.
+
+Review the script's subnet, DNS, endpoint, routing, and service assumptions against the server before running it. It changes server configuration and generates private client credentials, which must remain private.
+
+The [older VPN notes](vpn%20Lewy-setup/scripts/README-VPN.md) describe a larger WireGuard/AdGuard Home design. Their referenced `setup-server.sh` and security-notes file are not committed, so the current repository provides client management rather than a complete server installer.
+
+## Scope and development status
+
+These are exploratory projects with platform-specific assumptions. This README describes the committed source and its packaging gaps; it does not claim a verified production deployment. No automated test suite or repository-wide dependency lockfile is currently included.
+
+## Related work
+
+- [Hocking College networking and cybersecurity portfolio](https://github.com/FeikL2002/HockingCollege)
+- [Web application security labs](https://github.com/FeikL2002/Web-App-Penetration-Testing)
+- [AmericanSites website projects](https://github.com/FeikL2002/AmericanSites.us)
